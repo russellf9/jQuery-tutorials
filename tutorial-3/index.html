@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Tutorial 3</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+        .clicked {
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial</h1>
+<p>Examples from: <a href="http://jqfundamentals.com/chapter/jquery-basics">jquery-basics</a></p>
+
+<h2>Some List</h2>
+<p>Click on a list element to add a class and attribute.</p>
+<ul>
+    <li><span>Tom</span></li>
+    <li><span>Dick</span></li>
+    <li><span>Harry</span></li>
+</ul>
+
+<p id="add-text">JQ Will add text here</p>
+
+
+<a href="http://jquery.com/">jQuery</a>
+
+<script src="../app/bower_components/jquery/dist/jquery.js"></script>
+<script>
+
+  // get not existing element
+  $(document).ready( function() {
+
+      $("h1").addClass( "test" );
+
+//      if ( $( '#nonexistent' ) ) {
+//          console.log('Wrong! This code will always run!');
+//      }
+
+      if ($('#nonexistent').length ) {
+          console.log('Right! This code will not run!');
+      }
+
+      var listItems = $('li');
+      var rawListItem = listItems[0]; // or listItems.get( 0 )
+      var html = rawListItem.innerHTML;
+
+      console.log('list item html: ', html);
+
+      var secondListItem = listItems.eq( 1 );
+      secondListItem.remove();
+
+      $( '<p>', {  html: 'Hello!',  'class': 'greet'});
+
+      $('#add-text').html( function(index, oldHtml) {
+          return oldHtml + '!!';
+      });
+
+      listItems.each(function( index, elem ) {
+          // this: the current, raw DOM element
+          // index: the current element's index in the selection
+          // elem: the current, raw DOM element (same as this)
+          console.log('index: ', index, ' - | this: ', this, ' | `this` same as elem: ', this === elem);
+          $( elem ).prepend( '<b>' + index + ': </b>' );
+      });
+
+      listItems
+          .click(function() {
+              $( this ).addClass( 'clicked' );
+          })
+          .find( 'span' )
+          .attr( 'title', 'Hover over me' );
+
+  });
+
+</script>
+
+</body>
+</html>

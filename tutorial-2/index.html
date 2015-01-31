@@ -17,22 +17,14 @@
 <script src="../app/bower_components/jquery/dist/jquery.js"></script>
 <script>
 
+    var myCallBack = function(param1, param2) {
+        console.log('jQuery call back! - ', arguments);
+    };
+
     $( document ).ready(function() {
-
-        $( 'a').addClass('test');
-
-        $( 'a' ).click(function( event ) {
-
-            alert( "Thanks for visiting!" );
-
-            $( "a" ).removeClass( "test" );
-
-            event.preventDefault();
-
-            $( this ).hide( "slow" );
-
+        $.get( "../tutorial-1/index.html", function() {
+            myCallBack('russell','1');
         });
-
     });
 
 </script>
