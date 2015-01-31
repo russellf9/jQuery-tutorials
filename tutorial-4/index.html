@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 4</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+        .red {
+            color: darkred;
+        }
+        .blue {
+            color: cornflowerblue;
+        }
+        .blue {
+            color: lightgray;
+        }
+        .hidden {
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - Traversing & Manipulating</h1>
+<h2> - with some chaining.</h2>
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/traversing-manipulating'>jQuery Fundamentals</a></p>
+
+
+<ul>
+    <li class='special'><span>Tom</span></li>
+    <li><span>Dick</span></li>
+    <li><span>Harry</span></li>
+    <li class='special'><span>Jane</span></li>
+    <li class='special'><span>Mary</span></li>
+    <li><span>Rose</span></li>
+</ul>
+<p>a paragraph</p>
+
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+
+<p>Added this... (notice no border)</p>
+
+<span id='test'>Test</span>
+
+<form style="margin-top: 10px">
+    First name:<br>
+    <input type="text" name="firstname">
+    <br>
+
+    Last name:<br>
+    <input type="text" name="lastname">
+
+    <br>
+    Male:<br>
+    <input type="checkbox" name="male">
+</form>
+
+
+<select>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+</select>
+
+<br>
+<span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+  $(document).ready( function() {
+
+      var listItems = $('li');
+
+      // filter the selection to only items with a class of 'special'
+      var special = listItems.filter('.special');
+
+      // filter the selection to only items without a class of 'special'
+      var notSpecial = listItems.not('.special');
+
+      var test = $('#test');
+
+      // now manipulate the lists
+      $(special).addClass('red');
+      $(notSpecial).addClass('blue');
+
+      listItems.add('p').css('background-color', 'snow');
+
+      $('div')
+          .css('border', '2px solid red')
+          .add('p')
+          .add(test)
+          .css('background', 'yellow');
+
+      listItems.addClass( 'hidden' );
+      //listItems.eq( 1 ).removeClass( 'hidden' );
+      listItems.eq(1).toggleClass('hidden');
+
+      listItems.eq(1).css({
+          'font-size': '20px',
+          'padding-left': '20px'
+      });
+
+      // add a `placeholder value` to all inputs
+      var inputs =  $('input[type="text"]');
+
+      inputs.val( 'enter value' );
+
+      console.log(inputs.val()); // returns 'new value'
+
+      // set the default checkbox value to `true`
+      $( 'input[type="checkbox"]' ).prop( 'checked', 'checked' );
+
+      // set the selected item within the selections to the second item
+      $('select').val('volvo');
+      // note: $( 'select' ).val( '2' ); wasn't working
+
+      var anchors = $('a');
+
+      anchors.attr( 'title', 'Click me!' );
+
+      // cool! - add attribute to the href link!
+      anchors.attr( 'href', function(index, value) {
+          return value + '?special=true';
+      });
+
+      var listItemColor = listItems.css('color');
+
+      console.log('list color is: ', listItemColor);
+
+
+  });
+
+</script>
+
+</body>
+</html>
