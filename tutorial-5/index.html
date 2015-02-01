@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 5</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+
+        .red {
+            color: darkred;
+        }
+
+        .blue {
+            color: cornflowerblue;
+        }
+
+        .blue {
+            color: lightgray;
+        }
+
+        .hidden {
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - Traversing & Manipulating</h1>
+
+<h2> - with some chaining.</h2>
+
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/traversing-manipulating'>jQuery Fundamentals</a></p>
+
+
+<ul id="my-unordered-list">
+    <li class='special'><span>Tom</span></li>
+    <li><span>Dick</span></li>
+    <li><span>Harry</span></li>
+    <li class='special'><span>Jane</span></li>
+    <li class='special'><span>Mary</span></li>
+    <li><span>Rose</span></li>
+</ul>
+
+<br>
+<span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+        // Exercise, put the first list item at the end of the list
+
+//        Note: - this code creates a bit list!
+//      var listItems = $('li'),
+//          listItem = listItems.first();
+//
+//
+//      listItem.appendTo(listItems);
+
+        var list = $('#my-unordered-list');
+
+        var listItems = $('#my-unordered-list li');
+
+        // 1. append the item to the list by calling .appendTo() on the list item:
+        var listItem = $('#my-unordered-list li').first();
+        // or
+//      var listItem = list.$('li').first();
+//      listItem.appendTo( '#my-unordered-list' );
+        // TODO work out `descendant selector`
+
+        // 2. calling .append() on the list:
+        //list.append(listItem);
+
+        // 3. insert the list item after the last list item
+        listItems.first().insertAfter(listItems.last());
+
+        var myItems = list.add('li');
+
+        var clones = $('li').clone();
+
+        clones.html(function(index, oldHtml) {
+            return oldHtml + '!!!';
+        });
+
+        list.append(clones);
+
+        // add listener so we can test what happens after we remove an item
+        listItems.click(function() {
+            alert($(this).text());
+        });
+
+        // remove()
+        //var removedListItem = $(listItems).first().remove();
+
+        //removedListItem.appendTo('#my-unordered-list');
+
+        //removedListItem.trigger('click'); // no alert as click has been removed!
+
+
+        // detach() ( note the above lines have to be removed for this to work
+        var detachedListItem = $(listItems).first().detach();
+
+        // do something complicated with the list item
+        detachedListItem.html(function(index, oldHtml) {
+            console.log('old html1 ', oldHtml);
+            return oldHtml + '!';
+        });
+
+        detachedListItem.addClass('red');
+
+        detachedListItem.appendTo(list);
+        detachedListItem.trigger('click'); // alert!
+
+
+        // replaceWith()
+
+        var replacedListItem = listItems.first()
+            .replaceWith('<li>new!</li>');
+
+        replacedListItem.appendTo(list);
+
+        replacedListItem.trigger('click'); // no alert!
+
+
+    });
+
+</script>
+
+</body>
+</html>
