@@ -2,7 +2,7 @@
 <html>
 <head lang='en'>
     <meta charset='UTF-8'>
-    <title>Tutorial 5</title>
+    <title>Tutorial 6</title>
 
     <style>
         a.test {
@@ -44,6 +44,7 @@
     <p><strong><code>multiple bindings</code></strong></p>
     <p><strong><code>keypress</code></strong></p>
     <p><strong><code>preventDefault()</code></strong></p>
+    <p><strong><code>ternary operator</code></strong></p>
 </div>
 
 
@@ -191,7 +192,7 @@
 
             // Change the input element's background to red if backspace was
             // pressed, otherwise green.
-            $(this).css( 'background', event.which === 8 ? 'red' : 'green' );
+            $(this).css('background', event.which === 8 ? 'red' : 'green' );
 
         });
 
@@ -220,7 +221,6 @@
             event.preventDefault();
             //stopDefaultAction(event);
         });
-
 
 
     });

@@ -27,11 +27,14 @@
 <h2> - with some chaining.</h2>
 <p>Examples from: <a href='http://jqfundamentals.com/chapter/traversing-manipulating'>jQuery Fundamentals</a></p>
 
-<div>
+<div id="commands">
     <h3>jQuery commands covered:</h3>
     <p><strong><code>filter()</code></strong><small><cite> Reduce the set of matched elements to those that match the selector or pass the function's test.</cite></small></p>
+    <p><strong><code>not()</code></strong><small><cite>  Selects all elements that do not match the given selector.</cite></small></p>
     <p><strong><code>css()</code></strong></p>
+    <p><strong><code>toggleClass()</code></strong></p>
     <p><strong><code>val()</code></strong></p>
+    <p><strong><code>find()</code></strong></p>
     <p><strong><code>attr</code></strong></p>
 </div>
 
@@ -95,6 +98,10 @@
       // filter the selection to only items without a class of 'special'
       var notSpecial = listItems.not('.special');
 
+      var commands = $('#commands');
+
+      var commandList = commands.find('li');
+
       var test = $('#test');
 
       // now manipulate the lists
@@ -117,6 +124,14 @@
           'font-size': '20px',
           'padding-left': '20px'
       });
+
+      commands
+          .css('border', '1px solid black')
+          .css('background', 'white');
+
+      commandList
+          .css('background', 'white');
+
 
       // add a `placeholder value` to all inputs
       var inputs =  $('input[type="text"]');
@@ -144,6 +159,10 @@
       var listItemColor = listItems.css('color');
 
       console.log('list color is: ', listItemColor);
+
+
+      // TODO can't find the elements here... :-(
+      console.log('commandList: ', commandList)
 
 
   });

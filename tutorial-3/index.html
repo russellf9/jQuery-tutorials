@@ -5,8 +5,9 @@
     <title>Tutorial 3</title>
 
     <style>
-        a.test {
+        .test, a {
             font-weight: bold;
+            color: purple;
         }
         .clicked {
             color: darkred;
@@ -14,7 +15,7 @@
     </style>
 </head>
 <body>
-<h1>Tutorial</h1>
+<h1>Tutorial 3</h1>
 <p>Examples from: <a href="http://jqfundamentals.com/chapter/jquery-basics">jquery-basics</a></p>
 
 <h2>Some List</h2>
@@ -25,11 +26,10 @@
     <li><span>Harry</span></li>
 </ul>
 
-<p id="add-text">JQ added an exclamation mark  here</p>
+<p id="add-text">JQ added an exclamation mark here</p>
 
 
 <a href="http://jquery.com/">jQuery</a>
-
 
 <div>
     <h3>jQuery commands covered:</h3>
@@ -48,7 +48,7 @@
   // get not existing element
   $(document).ready( function() {
 
-      $("h1").addClass( "test" );
+      $('h1').addClass( 'test' );
 
 //      if ( $( '#nonexistent' ) ) {
 //          console.log('Wrong! This code will always run!');
