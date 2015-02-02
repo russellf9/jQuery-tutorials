@@ -25,10 +25,20 @@
     <li><span>Harry</span></li>
 </ul>
 
-<p id="add-text">JQ Will add text here</p>
+<p id="add-text">JQ added an exclamation mark  here</p>
 
 
 <a href="http://jquery.com/">jQuery</a>
+
+
+<div>
+    <h3>jQuery commands covered:</h3>
+    <p><strong><code>length</code></strong><small><cite> (to test the existence the result of a selector)</cite></small></p>
+    <p><strong><code>remove()</code></strong></p>
+    <p><strong><code>innerHTML()</code></strong></p>
+    <p><strong><code>eq()</code></strong><small><cite> Reduce the set of matched elements to the one at the specified index.</cite></small></small></p>
+    <p><strong><code>each()</code></strong></p>
+</div>
 
 <script src="../app/bower_components/jquery/dist/jquery.js"></script>
 <script>
@@ -50,6 +60,7 @@
       var rawListItem = listItems[0]; // or listItems.get( 0 )
       var html = rawListItem.innerHTML;
 
+
       console.log('list item html: ', html);
 
       var secondListItem = listItems.eq( 1 );
@@ -61,7 +72,7 @@
           return oldHtml + '!!';
       });
 
-      listItems.each(function( index, elem ) {
+      listItems.each(function(index, elem) {
           // this: the current, raw DOM element
           // index: the current element's index in the selection
           // elem: the current, raw DOM element (same as this)
