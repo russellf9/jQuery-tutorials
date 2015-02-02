@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 5</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - Aniamtion</h1>
+
+
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/effects'>jQuery Fundamentals - Animating Your Pages</a></p>
+
+
+<div>
+    <h3>jQuery commands covered:</h3>
+
+    <p><strong><code>show()</code></strong></p>
+    <p><strong><code>hide()</code></strong></p>
+    <p><strong><code>animate()</code></strong></p>
+</div>
+
+<br>
+
+<div>
+    <p id="showButton">Show</p>
+    <p id="hideButton">Hide</p>
+    <p class="hidden">Hidden element</p>
+</div>
+
+
+<br>
+
+<div>
+    <li class="car funtimes" style="position: relative;">Volvo</li>
+    <li class="car">Saab</li>
+    <li class="car">Fiat</li>
+    <li class="car">Mercedes</li>
+</div>
+
+<br>
+
+<div style="margin-top: 20px">
+    <span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+</div>
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+        var hiddenElements = $('.hidden');
+
+        var showButton = $('#showButton');
+
+        var hideButton = $('#hideButton');
+
+        // create a new pre-defined speed
+        jQuery.fx.speeds.turtle = 2100;
+
+        var hideElements = function() {
+            hiddenElements.hide();
+            hideButton.hide();
+        };
+
+        showButton.on('click', function(event) {
+            hiddenElements.show('turtle', function() {
+                showButton.hide();
+                hideButton.show();
+            });
+        });
+
+        hideButton.on('click', function(event) {
+            hiddenElements.fadeOut( 300, function() {
+                hideButton.hide();
+                showButton.show();
+            });
+        });
+
+
+        $('.funtimes').animate({
+                left: '+=50', // increase by 50
+                opacity: 0.25,
+                fontSize: '12px'
+            },
+            300,
+            function() {
+                // executes when the animation is done
+                console.log('animation done!');
+            }
+        );
+
+        hideElements();
+
+    });
+
+</script>
+
+</body>
+</html>
