@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 9</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - AJAX</h1>
+
+
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/ajax-deferred'>jQuery Fundamentals - AJAX</a></p>
+
+<p>AJAX -- "asynchronous JavaScript and XML" — is a means of loading data from a server without requiring a page reload. It uses a browser's built-in XMLHttpRequest (XHR) functionality to make a request to the server and then handle the data that the server returns.</p>
+
+<div>
+    <h3>jQuery commands covered:</h3>
+
+    <p><strong><code>createElement()</code></strong></p>
+    <p><strong><code>ajax()</code></strong></p>
+    <p><strong><code>Deferred()</code></strong></p>
+    <p><strong><code>pipe()</code></strong></p>
+    <p><strong><code>done()</code></strong></p>
+</div>
+
+<br>
+
+<div id="target"></div>
+<div id="response"></div>
+
+
+
+<br>
+
+<div style="margin-top: 20px">
+    <span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+</div>
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+
+        // Create the "callback" functions that will be invoked when...
+
+        // ... the AJAX request is successful
+        var updatePage = function(resp) {
+            $('#target').html(resp.people[0].name);
+        };
+
+        // ... the AJAX request fails
+        var printError = function(req, status, err) {
+            console.log('something went wrong', status, err);
+        };
+
+        // Create an object to describe the AJAX request
+        var ajaxOptions = {
+            url: 'data/people.json',
+            dataType: 'json',
+            success: updatePage,
+            error: printError
+        };
+
+        var json;
+
+        var addPeople = function() {
+            console.log('addPeople - json: ',json);
+            var ul = $('<ul>').appendTo('#target');
+            $(json).each(function(index, person) {
+                ul.append(
+                    //$(document.createElement('li')).text(person.name)
+                    $.parseHTML('<li><a href="'+person.url+'">'+person.name+'</a></li>')
+                );
+            });
+        };
+
+
+        // Initiate the request!
+        // $.ajax(ajaxOptions);
+
+
+        // or more concise
+        $.ajax( 'data/people.json', {
+            type: 'GET',
+            dataType: 'json',
+            success: function(resp) {
+                console.log( resp.people );
+                json = resp.people;
+                addPeople();
+            },
+            error: function( req, status, err ) {
+                console.log( 'something went wrong', status, err );
+            }
+        });
+
+
+//        $.get( 'data/people.json', function( html ){
+//            $( '#target' ).html( html );
+//        });
+
+        function doSomethingLater( fn, time ) {
+            var dfd = $.Deferred();
+
+            setTimeout(function() {
+                dfd.resolve( fn() );
+            }, time || 0);
+
+            return dfd.promise();
+        }
+
+        var hello = function() {
+            console.log('hello world!');
+        };
+
+        var promise = doSomethingLater(function() {
+            console.log( 'This function will be called in 100ms' );
+        }, 100);
+
+        // evoke the `promise` function
+        doSomethingLater(hello, 2000);
+
+
+        function doSomethingElseLater( fn, time ) {
+            var dfd = $.Deferred();
+
+            setTimeout(function() {
+                dfd.resolve( fn() );
+            }, time || 0);
+
+            return dfd.promise();
+        }
+
+        var dfd = doSomethingElseLater(function() { return 1; }, 100);
+
+        dfd
+            .pipe(function(resp) { return resp + ' ' + resp; })
+            .done(function(upperCaseResp) {
+                $('#response').html( upperCaseResp );
+            });
+
+
+    });
+
+</script>
+
+</body>
+</html>
