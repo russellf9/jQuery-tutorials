@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 5</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+
+        .red {
+            color: darkred;
+        }
+
+        .blue {
+            color: cornflowerblue;
+        }
+
+        .blue {
+            color: lightgray;
+        }
+
+        .hidden {
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - Events and Event Delegation</h1>
+
+
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/events'>jQuery Fundamentals - Events and Event
+    Delegation 2</a></p>
+
+
+<div>
+    <h3>jQuery commands covered:</h3>
+
+    <p><code><pre>
+        on('click', 'li', function(event) {
+           console.log( this ); // logs the list item that was clicked
+        });
+    </pre></code></p>
+    <p><strong><code>preventDefault()</code></strong></p>
+
+
+</div>
+
+<br>
+
+<form style="margin-top: 10px">
+    First name:<br>
+    <input type="text" name="firstname">
+    <br>
+
+    Last name:<br>
+    <input type="text" name="lastname">
+
+    <br>
+    Male:<br>
+    <input type="checkbox" name="male">
+
+    <br>
+    <input type="checkbox" id="my-checkbox"/>
+    <label for="my-checkbox">Checkbox</label>
+</form>
+
+<br>
+<ul id="my-unordered-list">
+    <li class="artist">Picasso</li>
+    <li class="artist">Turner</li>
+    <li class="car">Mercedes</li>
+    <li class="car">Volvo</li>
+    <li class="car">Saab</li>
+    <li class="artist">Judd</li>
+    <li class="car">Fiat</li>
+    <li class="artist">Matisse</li>
+    <li class="car">Volvo</li>
+    <li class="car">Fiat</li>
+    <li class="car">Saab</li>
+</ul>
+
+
+<br>
+
+<div>
+    <span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+</div>
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+        var listItems = $('li');
+
+        var artists = listItems.filter('.artist');
+
+        var cars = listItems.filter('.car');
+
+        var textInput = $('input[type="text"]');
+
+        var links = $('a');
+
+        var checkbox = $('#my-checkbox');
+
+        var unorderedList = $('#my-unordered-list');
+
+        var registerClick = function() {
+            console.log('registerClick');
+        };
+
+        var doSomethingElse = function() {
+            console.log('doSomethingElse');
+        };
+
+
+        // disable the checkbox
+        checkbox.on('click.preventDefault', function(event) {
+            console.log('checkbox?');
+            event.preventDefault();
+        });
+
+
+        unorderedList.on('click', 'li', function(event) {
+            console.log( this ); // logs the list item that was clicked
+        });
+
+        $('<li>a new list item!</li>').appendTo(unorderedList) ;
+
+
+    });
+
+</script>
+
+</body>
+</html>

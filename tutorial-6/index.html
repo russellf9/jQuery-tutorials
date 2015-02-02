@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+    <meta charset='UTF-8'>
+    <title>Tutorial 5</title>
+
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+
+        .red {
+            color: darkred;
+        }
+
+        .blue {
+            color: cornflowerblue;
+        }
+
+        .blue {
+            color: lightgray;
+        }
+
+        .hidden {
+            opacity: 0.05;
+        }
+    </style>
+</head>
+<body>
+<h1>Tutorial - Events and Event Delegation</h1>
+
+
+<p>Examples from: <a href='http://jqfundamentals.com/chapter/events'>jQuery Fundamentals - Events and Event
+    Delegation</a></p>
+
+
+<div>
+    <h3>jQuery commands covered:</h3>
+    <p><strong><code>on()</code></strong>
+        <small> ( always under the `hood`)</small>
+    </p>
+    <p><strong><code>off()</code></strong></p>
+    <p><strong><code>trigger()</code></strong></p>
+    <p><strong><code>multiple bindings</code></strong></p>
+    <p><strong><code>keypress</code></strong></p>
+    <p><strong><code>preventDefault()</code></strong></p>
+</div>
+
+
+<div>
+    <li class="artist">Picasso</li>
+    <li class="artist">Turner</li>
+    <li class="artist">Judd</li>
+    <li class="artist">Matisse</li>
+</div>
+
+<br>
+
+<div>
+    <li class="car">Volvo</li>
+    <li class="car">Saab</li>
+    <li class="car">Fiat</li>
+    <li class="car">Mercedes</li>
+</div>
+
+<br>
+
+<form style="margin-top: 10px">
+    First name:<br>
+    <input type="text" name="firstname">
+    <br>
+
+    Last name:<br>
+    <input type="text" name="lastname">
+
+    <br>
+    Male:<br>
+    <input type="checkbox" name="male">
+
+    <br>
+    <input type="checkbox" id="my-checkbox" />
+    <label for="my-checkbox">Checkbox</label>
+</form>
+
+<br>
+
+<div>
+    <a href="#foo"><span>I am a Link!</span></a>
+    <br>
+    <a href="#bar"><b><i>I am another Link!</i></b></a>
+</div>
+
+
+<br>
+
+<div>
+    <span><a href="http://www.factornine.co.uk">factornine.co.uk</a></span>
+</div>
+
+
+<script src='../app/bower_components/jquery/dist/jquery.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+        var listItems = $('li');
+
+        var artists = listItems.filter('.artist');
+
+        var cars = listItems.filter('.car');
+
+        var textInput = $('input[type="text"]');
+
+        var links = $('a');
+
+        var checkbox = $('#my-checkbox');
+
+        var registerClick = function() {
+            console.log('registerClick');
+        };
+
+        var doSomethingElse = function() {
+            console.log('doSomethingElse');
+        };
+
+        var displayEventObject = function(event) {
+            console.log('type: ',event.type);
+            console.log('key: ',event.which); // The button or key that was pressed
+            console.log('target: ',event.target);
+            console.log('pageX: ', event.pageX );   // The document mouse X coordinate.
+            console.log('pageY: ',  event.pageY );   // The document mouse Y coordinate.
+        };
+
+        function stopDefaultAction(event) {
+            event.preventDefault();
+        }
+
+       /*
+        $('li').click(function(event) {
+
+            //console.log('event.target: ', event.target);
+            // console.log( 'clicked', $(this).text() );
+            console.log('clicked', $(event.target).text()); // good - event.target equals this!
+            // ( bit we need the $() wrap to create the jQuery object to call the text() function !)
+            // console.log('this and target are the same - ' ,event.target === this);
+            // console.log('hey and don`t forget about currentTarget! - ',event.currentTarget);
+        });
+        */
+
+        // or
+        /*
+        listItems.on('click', function(event) {
+            console.log( 'clicked', $(this).text() );
+            //console.log('event.target: ', event.currentTarget);
+            $(this).off( 'click' );
+        });
+        */
+
+        // will call the event above on all the `li` items
+        //listItems.trigger( 'click' );
+
+        artists.on('click.logging', function() {
+            console.log( 'a list item was clicked' );
+            $(this).off( 'click.logging' );
+        });
+
+        artists.on('click.analytics', function() {
+            registerClick();
+            doSomethingElse();
+        });
+
+        artists.on('click.eventObject', function(event) {
+            displayEventObject(event);
+        });
+
+        textInput.on('focus blur', function() {
+            console.log( 'The user focused or blurred the input' );
+        });
+
+        $( window ).on( 'resize.foo scroll.bar', function() {
+            console.log( 'The window has been re-sized or scrolled!' );
+        });
+
+        $(document).on('keypress.eventObject', function(event) {
+            displayEventObject(event);
+        });
+
+        textInput.on('keydown', function(event) {
+            // this: The element on which the event handler was bound.
+            // event: The event object.
+
+            // Change the input element's background to red if backspace was
+            // pressed, otherwise green.
+            $(this).css( 'background', event.which === 8 ? 'red' : 'green' );
+
+        });
+
+        // Preventing the default action
+        cars.on('click.preventDefault', function(event) {
+            // Prevent the default action.
+            event.preventDefault();
+            // Log stuff.
+            console.log( 'I was just clicked!' );
+        });
+
+        links.on( 'click', function( event ) {
+           // event.preventDefault();
+            //event.stopPropagation();
+            console.log( $( this ).attr( 'href' ) );
+        });
+
+        $('*').add( [ document, window ] ).on( 'click', function( event ) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log( this );
+        });
+
+        checkbox.on('click.preventDefault', function(event) {
+            console.log('checkbox?');
+            event.preventDefault();
+            //stopDefaultAction(event);
+        });
+
+
+
+    });
+
+</script>
+
+</body>
+</html>
